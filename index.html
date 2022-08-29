@@ -1,505 +1,180 @@
 <head>
-    <meta name="viewport" content="user-scalable=no, width=device-width">
-    <meta charset="utf-8">
-    <title>inAppBrowser.com</title>
+  <meta name="viewport" content="user-scalable=no, width=device-width" />
+  <meta charset="utf-8" />
+  <title>inAppBrowser-csp.netlify.app</title>
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src https://inappbrowser-csp.netlify.app/; child-src 'none'; script-src 'nonce-Ilovescript'; style-src 'nonce-Ilovecss';"
+  />
 </head>
-<h1>InAppBrowser.com</h1>
-<p class="subtitle">Check if an in-app browser is injecting JavaScript code</p>
+<h1>inappbrowser-csp</h1>
+<p class="subtitle">
+  Check if an in-app browser is violating a csp set in meta-tag
+</p>
 <p id="high-level-summary">
-    Some iOS and Android apps make use of a custom in-app browser (<a target="_blank" href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser">full details</a>). This causes potential security
-    and privacy risks to the user.
+  Some iOS and Android apps make use of a custom in-app browser (<a
+    target="_blank"
+    href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser"
+    >full details</a
+  >). This causes potential security and privacy risks to the user. Inspired by
+  the work of krausefx, I made this page to test if setting a CSP makes any
+  difference, and if CSPs can be a mitigation to reduce the level of tracking
+  in-app browsers can do.
 </p>
 
-<div class="summaries" id="clean-summary">
-    <p>✅ This tool couldn't detect any JavaScript injections. However, this doesn't mean there were no code injections. As of iOS 14.3, Apple introduced a new way of running JavaScript code in an "Isolated World", making it impossible for a website to verify
-        what code is being executed.</p>
-    <p>If you opened this website in iOS Safari, or it's being rendered by SFSafariViewController, you are on the safe side when it comes to injecting JavaScript code.</p>
-    <p>Please read the Disclaimer below, as well as the <a href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser" target="_blank">full explanation</a></p>
-</div>
-<div class="summaries" id="medium-summary">
-    <p>🕵️‍♂️ Javascript injection detected. This does not necessarily imply malicious behaviour.</p>
-    However, this doesn't mean there were no other code injections. As of iOS 14.3, Apple introduced a new way of running JavaScript code in an "Isolated World", making it impossible for a website to verify what code is being executed.</p>
-    <p>Please read the Disclaimer below, as well as the <a href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser" target="_blank">full explanation</a></p>
-</div>
-<div class="summaries" id="dangerous-summary">
-    <p>🚨 JavaScript injection detected, with some potentially dangerous commands.</p>
-    <p>There might be additional JavaScript commands executed using "Isolated World" JavaScript, which can't be detected on this page.</p>
-    <p>Please read the Disclaimer below, as well as the <a href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser" target="_blank">full explanation</a></p>
-</div>
-<div class="summaries" id="third-party-browser">
-    <p>✅ It looks like you're opening this page on a third party iOS/Android browser.</p>
-    <p>It doesn't really make sense to show the JavaScript commands executed, as the browser needs to run JavaScript commands to offer their features, like a password manager, the print dialog, search on page, and media management</p>
-    <p>This page will still show the commands detected by this page, however some mobile browsers already leverage the "Isolated World" JavaScript, which can't be detected by this page</p>
-    <p>Please read the Disclaimer below, as well as the <a href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser" target="_blank">full explanation</a></p>
-    <p><b>Please note that there aren't any meaningful conclusions on the output below for browser apps.</b></p>
-    <br />
-</div>
-<ul id="all-comments">
-</ul>
-<hr style="margin-top: 0px; margin-bottom: 15px" />
-
-<div class="summary-note" id="top-summary-1">
-    The summary above shows a list of things the in-app browser did when you opened this website. However, there might be other things happening as well. The raw output below should be carefully studied to better understand what's happening.
+<div class="summaries">
+  <p>
+    In-app browsers might have taken measures to bypass CSP-policies. If you
+    opened
+    <a href="http://inappbrowser.com" target="_blank">InAppBrowser.com</a>
+    and saw sign that JavaScript was injected into the page, and then opened
+    this page in the same browser without any csp-violation below, something
+    fishy is happening.
+  </p>
 </div>
 
-<ol id="resultsList">
-    <h5>Detected JavaScript Commands:</h5>
+<hr />
+
+<ol id="errors">
+  <h5>Violated csp-polycies</h5>
 </ol>
 
-<div class="summary-note">
-    <p><b>Disclaimer</b>: This tool works by overriding the most common JavaScript functions, however the host app may still inject other commands. As of iOS 14.3, Apple introduced <a href="https://developer.apple.com/documentation/webkit/wkcontentworld"
-            target="_blank">a new way of running JavaScript code</a> in an "Isolated World", making it impossible for a website to verify what code is being executed. Also this tool cannot detect other app tracking that may occur, such as custom gesture recognition,
-        screenshot detection, or tracking of web request events.</p>
-    <p><b>Important:</b> Before jumping to any conclusions, please <a href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser" target="_blank">read this post</a>.</p>
-</div>
-
 <footer>
-    <hr />
-    <p>
-        <a target="_blank" href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser">
-            About this tool
-        </a> |
-        <a target="_blank" href="https://github.com/KrauseFx/InAppBrowser.com">
-            Open on GitHub
-        </a> | <a target="_blank" href="https://twitter.com/KrauseFx">@KrauseFx</a></p>
+  <hr />
+  <p>
+    <a
+      target="_blank"
+      href="https://github.com/mortenkjelling/InAppBrowser-test"
+    >
+      Open on GitHub
+    </a>
+  </p>
 </footer>
 
-<script type="text/javascript">
-    // Fetch the nodes first, before we override the `document` methods
-    const resultsList = document.getElementById("resultsList")
-    const cleanSummary = document.getElementById("clean-summary")
-    const mediumSummary = document.getElementById("medium-summary")
-    const dangerousSummary = document.getElementById("dangerous-summary")
+<script type="text/javascript" nonce="Ilovescript">
+  const errorList = document.getElementById('errors');
 
-    const elementsToHideOnNonClean = [
-        cleanSummary,
-    ]
+  const addToLog = (logmessage) => {
+    errorList.innerHTML += logmessage;
+  };
 
-    // Check the user agent string if the current browser is a third party browser
-    // Currently detecting Brave, Chrome, DuckDuckGo, Firefox, Edge and the Google search app
-    let isThirdPartyBrowser = navigator.userAgent.includes("CriOS") || navigator.userAgent.includes("EdgiOS") || navigator.userAgent.includes("FxiOS") || navigator.userAgent.includes("GSA") || navigator.userAgent.includes("DuckDuckGo") || navigator.brave;
-
-    // Additionally check for Android third party user agents
-    if (navigator.userAgent.includes("Android") && (navigator.userAgent.includes("Chrome") || navigator.userAgent.includes("Firefox") || navigator.userAgent.includes("EdgA"))) {
-        isThirdPartyBrowser = true
-    }
-
-
-    if (isThirdPartyBrowser) {
-        document.getElementById("third-party-browser").style.display = "block"
-        dangerousSummary.style.display = "none"
-        mediumSummary.style.display = "none"
-        cleanSummary.style.display = "none"
-    } else {
-        document.getElementById("third-party-browser").style.display = "none"
-    }
-
-    const elementsToShowOnNonClean = [
-        resultsList,
-        document.getElementById("top-summary-1"),
-    ]
-    for (const element of elementsToShowOnNonClean) {
-        element.style.display = "none"
-    }
-
-    const allComments = document.getElementById("all-comments")
-    const summary = document.getElementById("summary")
-    const denyList = [
-        "globalThis",
-        "Object",
-        "log",
-        "parseInt",
-        "Array",
-        "Promise",
-        "Reflect",
-        "location",
-        "onmouseout",
-        "onmouseover",
-        "onpointerout",
-        "onmousemove",
-        "onmouseleave",
-        "onpointerrawupdate",
-        "onpointerover",
-        "onpointerenter",
-        "onpointermove",
-        "onmouseenter",
-        "onpointerleave",
-        "onscroll",
-        "onpointerdown",
-        "ongotpointercapture",
-        "onpointercancel",
-        "onlostpointercapture",
-        "defaultView",
-        "toString"
-    ]
-
-    const potentiallyDangerous = {
-        "createElement('script'": "Injects external JavaScript code",
-        "http://": "Uses an unencrypted URL, making the whole page insecure",
-        "addEventListener('selectionchange'": "Monitors all text selections on websites",
-        "addEventListener('click'": "Monitors all taps happening on websites, including taps on all buttons & links",
-        "addEventListener('keypress'": "Monitors all keyboard inputs on websites",
-        "addEventListener('keyup'": "Monitors all keyboard inputs on websites",
-        "addEventListener('keydown'": "Monitors all keyboard inputs on websites",
-        "createElement('a'": "Creates a new link on website",
-        "elementFromPoint": "Gets information about an element based on coordinates, which can be used to track which elements the user clicks on",
-        "querySelector('input[type=password]": "Accesses all password fields: This could either mean the app has a password manager, or the app reads or enters passwords on the page",
-        "addEventListener('message'": "Monitors all JavaScript messages, this can be used for many things, including communication with iframes",
-        "addEventListener('focusin'": "Monitors when the user focuses on an element, like a textfield",
-    }
-    const neutralNotes = {
-        "createElement('style')": "Adds CSS code, allows app to customize appearance of website",
-        "addEventListener('focus'": "Monitors whenever you focus a text field or other element",
-        "addEventListener('blur'": "Monitors whenever you remove the focus from an element",
-        "querySelectorAll('img'": "Accesses all images on the page",
-    }
-    const goodNotes = {
-        "querySelector('head > meta[property=\"og:site_name\"]')": "Gets the website's name",
-        "querySelector('head > meta[name=\"title\"]')": "Gets the website title",
-        "querySelectorAll('head > link[rel~=\"icon\"]')": "Gets the website's favicon(s)",
-        "querySelector('head > title')": "Gets the website title",
-        "getElementsByTagName('meta')": "Gets the page's metadata (like share text), this is unrelated to Meta the company",
-    }
-
-    let lastLevel = -1;
-    let existingEntries = [];
-
-    function appendEvent(str, level) {
-        let classesToUse = ""
-        let comments = ""
-        let allCommentToPush = null;
-
-        // Iterate over potentiallyDangerous, and see if any of them are included in the `str`
-        for (const [key, value] of Object.entries(potentiallyDangerous)) {
-            if (str.indexOf(key) > -1) {
-                classesToUse += " danger "
-                comments += `<p class='bad-comment'>^&nbsp;&nbsp;${value}</p>`
-                allCommentToPush = `<li class='bad-in-comments'>${value}</li>`
-
-                cleanSummary.style.display = "none"
-                mediumSummary.style.display = "none"
-                if (!isThirdPartyBrowser) {
-                    dangerousSummary.style.display = "block"
-                }
-            }
-        }
-        // Iterate over neutralNotes, and see if any of them are included in the `str`
-        for (const [key, value] of Object.entries(neutralNotes)) {
-            if (str.indexOf(key) > -1) {
-                comments += `<p class='neutral-comment'>^&nbsp;&nbsp;${value}</p>`
-                allCommentToPush = `<li class='neutral-in-comments'>${value}</li>`
-            }
-        }
-        // Iterate over goodNotes, and see if any of them are included in the `str`
-        for (const [key, value] of Object.entries(goodNotes)) {
-            if (str.indexOf(key) > -1) {
-                comments += `<p class='good-comment'>^&nbsp;&nbsp;${value}</p>`
-                allCommentToPush = `<li class='good-in-comments'>${value}</li>`
-            }
-        }
-
-        if (allCommentToPush) {
-            if (!existingEntries.includes(allCommentToPush)) {
-                allComments.innerHTML += allCommentToPush
-            }
-            existingEntries.push(allCommentToPush)
-        }
-
-        if (level < lastLevel) {
-            classesToUse += " reducedLevel "
-        }
-        lastLevel = level;
-
-        resultsList.innerHTML += "<li class='" + classesToUse + "'>" + str + comments + "</li>"
-        for (const element of elementsToShowOnNonClean) {
-            element.style.display = "block"
-        }
-
-        if (cleanSummary.style.display !== "none") {
-            for (const element of elementsToHideOnNonClean) {
-                element.style.display = "none"
-            }
-            if (!isThirdPartyBrowser) {
-                mediumSummary.style.display = "block"
-            }
-        }
-    }
-
-    // Function to help surround the value by ' if it's a string
-    function renderParam(param) {
-        if (typeof param === "string") {
-            return "'" + param.replace("'", "\\'") + "'"
-        } else {
-            return param
-        }
-    }
-
-    function overrideFunction(node, prop, level) {
-        if (typeof node[prop] !== "function") {
-            return;
-        }
-        try {
-            const original = node[prop]
-            node[prop] = function() {
-                let str = prop;
-                if (arguments) {
-                    str = `${node.constructor.name}.${prop}(`
-                    str += Object.values(arguments).map((arg) => renderParam(arg)).join(", ")
-                    str += ")"
-                }
-                // `str` would be something like
-                // "HTMLDocument.querySelector('head > meta['property="og:site_name"]')"
-
-                appendEvent(str, level)
-                const fakeObj = original.apply(node, arguments)
-                if (fakeObj) {
-                    investigate(fakeObj, level + 1);
-                    const handler1 = {
-                        get(target, prop, receiver) {
-                            // For some reason, prop is always a string it seems
-                            const spaces = "&nbsp;".repeat(level * 4)
-                            if (Math.abs(parseInt(prop)) > 0 || prop == "0") {
-                                appendEvent(spaces + fakeObj + "[" + renderParam(prop) + "]", level + 1)
-                            } else {
-                                appendEvent(spaces + fakeObj + "." + prop + "", level + 1)
-                            }
-                            return target[prop]
-                        },
-                        set(target, prop, value, receiver) {
-                            const spaces = "&nbsp;".repeat(level * 4)
-                            if (Math.abs(parseInt(prop)) > 0 || prop == "0") {
-                                appendEvent(spaces + fakeObj + "[" + renderParam(prop) + "] = '" + value + "'", level + 1)
-                            } else {
-                                appendEvent(spaces + fakeObj + "." + prop + " = " + renderParam(value), level + 1)
-                            }
-                            return target[prop] = value
-                        }
-                    }
-
-                    return new Proxy(fakeObj, handler1);
-                }
-                return fakeObj;
-            }
-            console.log("Sucessfully overwrote " + prop + " on " + node)
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    function investigate(node, level) {
-        for (var prop in node) {
-            if (denyList.includes(prop)) {
-                continue;
-            }
-            value = node[prop]
-            overrideFunction(node, prop, level)
-        }
-    }
-    investigate(document, 1);
-
-    const originalAddEventListener = window.addEventListener;
-    const originalRemoveEventListener = window.removeEventListener;
-    window.addEventListener = function(...args) {
-        const str = `window.addEventListener('${args[0]}', ${args.slice(1).map((arg) => renderParam(arg)).join(", ")}`
-        appendEvent(str, 1)
-        return originalAddEventListener.apply(window, args)
-    }
-    window.removeEventListener = function() {
-        appendEvent("window.removeEventListener('" + arguments[0] + "')", 1)
-        return originalRemoveEventListener.apply(window, arguments)
-    }
+  document.addEventListener('securitypolicyviolation', (e) => {
+    addToLog(
+      `<li><strong>${e.violatedDirective}:</strong><br/>${e.blockedURI}</li>`
+    );
+  });
 </script>
 
-<style type="text/css">
-    * {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        color: #353535;
-    }
-    
-    .bad-comment {
-        font-size: 0.8em;
-        color: rgb(175, 0, 0);
-        text-align: right;
-        margin-bottom: 5px;
-        width: 100%;
-        margin-top: 0px;
-        font-family: 'Courier New', Courier, monospace;
-        padding: 5px;
-    }
-    
-    .neutral-comment {
-        font-size: 0.8em;
-        color: rgb(0, 0, 175);
-        text-align: right;
-        margin-bottom: 5px;
-        font-weight: bold;
-        width: 100%;
-        margin-top: 0px;
-        font-family: 'Courier New', Courier, monospace;
-        padding: 5px;
-    }
-    
-    .good-comment {
-        font-size: 0.8em;
-        color: rgb(0, 187, 0);
-        text-align: right;
-        margin-bottom: 5px;
-        width: 100%;
-        font-weight: bold;
-        margin-top: 0px;
-        font-family: 'Courier New', Courier, monospace;
-        padding: 5px;
-    }
-    
-    .reducedLevel {
-        margin-top: 30px;
-    }
-    
+<style type="text/css" nonce="Ilovecss">
+  * {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    color: #353535;
+  }
+  body {
+    background-color: #f0f0f0;
+    max-width: 600px;
+    padding-bottom: 20px;
+  }
+  /* On larger screens only */
+
+  @media only screen and (min-width: 600px) {
     body {
-        background-color: #f0f0f0;
-        max-width: 600px;
-        padding-bottom: 20px;
+      margin: 40px;
     }
-    /* On larger screens only */
-    
-    @media only screen and (min-width: 600px) {
-        body {
-            margin: 40px;
-        }
-    }
-    
-    h1 {
-        font-size: 1.5em;
-    }
-    
-    a {
-        color: #0085bd !important;
-    }
-    
-    #resultsList h5 {
-        margin-top: 10px;
-        padding-top: 0px;
-    }
-    
-    #resultsList {
-        margin-left: -5px;
-        margin-right: -5px;
-        overflow-y: auto;
-        max-width: cacl(100% - 10px);
-        white-space: nowrap;
-        background-color: rgba(168, 247, 251, 0.4);
-        border: 1px solid #ccc;
-        padding-left: 10px;
-        padding-right: 35px;
-        padding-top: 0px;
-        list-style: none;
-    }
-    
-    #resultsList>li {
-        margin-bottom: 0.5em;
-        font-size: 0.8em;
-        font-family: monospace;
-    }
-    
-    #author {
-        margin-top: -10px;
-    }
-    
-    footer a {
-        text-decoration: none;
-    }
-    
-    footer p {
-        text-align: center;
-        font-size: 0.8em;
-        margin-top: -15px;
-        margin-bottom: 5px;
-        color: #bbb !important;
-    }
-    
-    .danger {
-        color: rgba(255, 0, 0, 1);
-        font-weight: bold;
-    }
-    
-    hr {
-        border: 0;
-        height: 1px;
-        margin-top: 25px;
-        margin-bottom: 25px;
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(40, 40, 40, 0.3), rgba(0, 0, 0, 0));
-        background-color: transparent !important;
-    }
-    
-    .summaries {
-        padding: 15px;
-        margin-left: -5px;
-        margin-right: -5px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-    }
-    
-    #third-party-browser {
-        background-color: rgba(72, 255, 0, 0.3);
-    }
-    
-    #clean-summary {
-        background-color: rgba(255, 255, 0, 0.3);
-    }
-    
-    #medium-summary {
-        display: none;
-        background-color: rgba(255, 255, 0, 0.3);
-    }
-    
-    #dangerous-summary {
-        display: none;
-        background-color: rgba(255, 0, 0, 0.3);
-    }
-    
-    #all-comments {
-        padding-left: 10px;
-        margin-top: 10px;
-        list-style: inside;
-        line-height: 1.3em;
-        font-size: 0.8em;
-    }
-    
-    #all-comments>li {
-        text-align: left !important;
-        padding-left: 0px;
-        font-family: 'Courier New', Courier, monospace !important;
-        font-weight: bold;
-    }
-    
-    .bad-in-comments {
-        color: rgb(175, 0, 0);
-    }
-    
-    .neutral-in-comments {
-        color: rgb(0, 0, 175);
-    }
-    
-    .good-in-comments {
-        color: rgb(0, 150, 0);
-    }
-    
-    .subtitle {
-        font-style: italic;
-        font-size: 0.9em;
-        color: #666;
-        margin-top: -10px;
-    }
-    
-    .summary-note {
-        text-align: left;
-        color: #666;
-        font-size: 0.9em;
-    }
-    
-    #high-level-summary {
-        color: #555;
-        margin-left: 20px;
-        margin-right: 10px;
-    }
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  a {
+    color: #0085bd !important;
+  }
+
+  #errors {
+    margin-left: -5px;
+    margin-right: -5px;
+    overflow-y: auto;
+    max-width: cacl(100% - 10px);
+    white-space: nowrap;
+    background-color: rgba(251, 168, 168, 0.4);
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    padding-right: 35px;
+    padding-top: 0px;
+    list-style: none;
+  }
+
+  #errors > li {
+    margin-bottom: 0.5em;
+    font-size: 0.8em;
+    font-family: monospace;
+  }
+
+  #errors > li > strong {
+    color: rgba(255, 0, 0, 0.3);
+  }
+
+  #author {
+    margin-top: -10px;
+  }
+
+  footer a {
+    text-decoration: none;
+  }
+
+  footer p {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: -15px;
+    margin-bottom: 5px;
+    color: #bbb !important;
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(40, 40, 40, 0.3),
+      rgba(0, 0, 0, 0)
+    );
+    background-color: transparent !important;
+  }
+
+  hr.tight {
+    margin-top: 0px;
+    margin-bottom: 15px;
+  }
+
+  .summaries {
+    padding: 15px;
+    margin-left: -5px;
+    margin-right: -5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  .subtitle {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: -10px;
+  }
+
+  .summary-note {
+    text-align: left;
+    color: #666;
+    font-size: 0.9em;
+  }
+
+  #high-level-summary {
+    color: #555;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
 </style>

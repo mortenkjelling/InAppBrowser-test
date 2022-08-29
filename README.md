@@ -1,52 +1,43 @@
 <img src="/assets/tik_tok_framed.png" width="300" align="right">
 
-# [InAppBrowser.com](https://InAppBrowser.com)
+# [InAppBrowser-csp.netlify.app](https://InAppBrowser-csp.netlify.app)
 
 ## What is this project?
 
-Please read [this article](https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser) first
+This is a small test to check how In-app browsers responds to Content Security Policies set as a meta tag in a statically hosted html file.
+The idea (and code) comes from the good work of Krausefx, and you should probably read [this article](https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser) first.
 
 ## How does it work?
 
-To my knowledge, there is no good way to monitor all JavaScript commands that get executed by the host iOS app ([would love to hear if there is a better way](https://twitter.com/KrauseFx)).
+By setting a Content Security Policy(CSP) on a page, we can prevent injectet script, css and unwanted requests to be performed on a page.
+Usually it is advised to set a policy in the header of the response, but in my case I cannot do that since the page is statically hosted.
+So I put this in the head of the html:
 
-I created a new, plain HTML file, with some JS code to override some of the `document.` methods:
-
-```javascript
-document.getElementById = function(a, b) {
-    appendCommand('document.getElementById("' + a + '")')
-    return originalGetElementById.apply(this, arguments);
-}
+```html
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; img-src 'none'; child-src 'none'; script-src 'nonce-Ilovescript'; style-src 'nonce-Ilovecss';"
+/>
 ```
 
-<h4><a href="/index.html">View the Source Code here</a></h4>
+I then add a matching `nonce` to the script and style tags on the page.
 
-<h4><a href="https://krausefx.com/blog/announcing-inappbrowsercom-see-what-javascript-commands-get-executed-in-an-in-app-browser">Check out the full announcement</a></h4>
+```javascript
+<script type="text/javascript" nonce="Ilovescript">
+  const errorList = document.getElementById('errors');
+
+  const addToLog = (logmessage) => {
+    errorList.innerHTML += logmessage;
+  };
+
+  document.addEventListener('securitypolicyviolation', (e) => {
+    addToLog(`<li>${e.violatedDirective}:  ${e.blockedURI}</li>`);
+  });
+</script>
+```
+
+This code listens to the `securitypolicyviolation` event which is triggered whenever something violates the CSP set for the page. It then adds the violation to the html so we can see it on the page.
 
 ## How to use
 
-Open [InAppBrowser.com](https://InAppBrowser.com) through the iOS/Android app of your choice. For a social media app post the link, or for messengers send the link to yourself, and try opening the page as part of their in-app web browser.
-
-## `ad-container` folder
-
-This folder contains an empty iOS app project, that renders the [`InAppBrowser.com`](InAppBrowser.com) website. 
-
-```objective-c
-[self.webView evaluateJavaScript:@"document.getElementById('usingNewMethod')"
-                         inFrame:nil
-                   inContentWorld:[WKContentWorld defaultClientWorld]
-                completionHandler:^(id _Nullable something, NSError * _Nullable error) {
-    NSLog(@"new: %@", something);
-}];
-
-[self.webView evaluateJavaScript:@"document.getElementById('usingOldMethod')"
-                copletionHandler:^(id _Nullable something, NSError * _Nullable error) {
-    NSLog(@"old: %@", something);
-}];
-```
-
-The above code uses the new and the old method of running JavaScript code on websites. For more deatils, check out [WKContentWorld](https://developer.apple.com/documentation/webkit/wkcontentworld).
-
-When you open the InAppBrowser.com website through that app, you can see how only the "usingOldMethod" output is shown, while the "usingNewMethod" output doesn't show up.
-
-<img src="/assets/using-old-method.png" width="300" />
+Open [InAppBrowser-csp.netlify.app](https://InAppBrowser-csp.netlify.app) through the iOS/Android app of your choice. For a social media app post the link, or for messengers send the link to yourself, and try opening the page as part of their in-app web browser.
