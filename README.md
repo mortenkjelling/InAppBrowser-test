@@ -14,7 +14,7 @@ So I put this in the head of the html:
 ```html
 <meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; img-src 'none'; child-src 'none'; script-src 'nonce-Ilovescript'; style-src 'nonce-Ilovecss';"
+  content="default-src 'self'; img-src https://inappbrowser-csp.netlify.app/; child-src 'none'; script-src 'nonce-Ilovescript'; style-src 'nonce-Ilovecss';"
 />
 ```
 
