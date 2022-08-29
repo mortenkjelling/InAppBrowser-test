@@ -1,5 +1,3 @@
-<img src="/assets/tik_tok_framed.png" width="300" align="right">
-
 # [InAppBrowser-csp.netlify.app](https://InAppBrowser-csp.netlify.app)
 
 ## What is this project?
